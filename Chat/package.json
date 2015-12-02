@@ -1,14 +1,14 @@
 {
   "name": "Chat",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
-  "description": "Chat",
+  "description": "My first socket.io app",
   "author": {
     "name": "ialiyev",
-    "email": ""
+    "email": "imran.aliyev@gmail.com"
   },
   "dependencies": {
     "express": "~4.9.0",
