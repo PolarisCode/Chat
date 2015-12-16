@@ -7,24 +7,36 @@ var app = express();
 var httpServer = http.Server(app);
 var io = socketio(httpServer);
 
+var users = [];
+
 app.use(logger('dev'));
 app.use(express.static('public'));
 
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname +  '/index.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
+   
+    var currentUser = '';
+    
+    socket.on('userEnter', function (username) {
+        currentUser = username;
+        users.push(username);
+        console.log('a user connected ' + JSON.stringify(users));
+        io.emit('userEnter', users);
+    });
     
     socket.on('chat message', function (msg) {
         console.log('message: ' + msg);
         io.emit('chat message', msg);
     });
-
+    
     socket.on('disconnect', function () {
         console.log('user disconnected');
+        users.splice(users.indexOf(currentUser), 1);
+        io.emit('userExit', currentUser);
     });
 });
 

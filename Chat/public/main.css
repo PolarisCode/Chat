@@ -30,10 +30,33 @@ form {
         padding: 10px;
     }
 
+#users {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #d56e00;
+    width: 20%;
+    float: right;
+    height: 100vh;
+}
+
+    #users li {
+        border: 1px solid black;
+        margin: 5px;
+        padding: 5px;
+        color: #4AFF58;
+        border-radius: 5px;
+        background: black;
+    }
+
 #messages {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    background-color: #9fc2c9;
+    width: 80%;
+    float: left;
+    height: 100vh;
 }
 
     #messages li {
