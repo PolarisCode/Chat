@@ -18,25 +18,30 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-   
-    var currentUser = '';
+    
+    var currentUser = null;
     
     socket.on('userEnter', function (username) {
-        currentUser = username;
-        users.push(username);
-        console.log('a user connected ' + JSON.stringify(users));
-        io.emit('userEnter', users);
+        if (username && username != null) {
+            currentUser = username;
+            users.push(username);
+            console.log('a user connected ' + JSON.stringify(users));
+            io.emit('userEnter', users);
+            io.emit('chat message', "user " + currentUser + " has joined to chat");
+        }
     });
     
     socket.on('chat message', function (msg) {
         console.log('message: ' + msg);
-        io.emit('chat message', currentUser + ": "+  msg);
+        io.emit('chat message', currentUser + ": " + msg);
     });
     
     socket.on('disconnect', function () {
         console.log('user disconnected');
-        users.splice(users.indexOf(currentUser), 1);
-        io.emit('userExit', currentUser);
+        if (currentUser != null) {
+            users.splice(users.indexOf(currentUser), 1);
+            io.emit('userExit', currentUser);
+        }
     });
 });
 
